@@ -13,14 +13,13 @@ public class Animal
     public string Status { get; set; }
     public string HousingUnit { get; set; }
 
-    // All seven fileds are set and follow the order in the animal.txt. Satus and HousingUnit are calculated.
+    // All seven fields are set and follow the order in the animal.txt. Status and HousingUnit are calculated.
 
     public Animal(string id, string name, string species, int age, int score, string status, string housingUnit)
     { 
         this.ID = id;
         this.Name = name;
         this.Species = species;
-        this.Age = age;
         this.Age = age;
         this.Score = score;
         this.Status = status;
