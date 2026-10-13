@@ -28,11 +28,117 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        components = new System.ComponentModel.Container();
+        dgvAnimals = new DataGridView();
+        colID = new DataGridViewTextBoxColumn();
+        colName = new DataGridViewTextBoxColumn();
+        colSpecies = new DataGridViewTextBoxColumn();
+        colAge = new DataGridViewTextBoxColumn();
+        colScore = new DataGridViewTextBoxColumn();
+        colStatus = new DataGridViewTextBoxColumn();
+        colHousing = new DataGridViewTextBoxColumn();
+        ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
+        SuspendLayout();
+        // 
+        // dgvAnimals
+        // 
+        dgvAnimals.AllowUserToAddRows = false;
+        dgvAnimals.AllowUserToDeleteRows = false;
+        dgvAnimals.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dgvAnimals.Columns.AddRange(new DataGridViewColumn[] { colID, colName, colSpecies, colAge, colScore, colStatus, colHousing });
+        dgvAnimals.Location = new Point(75, 3);
+        dgvAnimals.MultiSelect = false;
+        dgvAnimals.Name = "dgvAnimals";
+        dgvAnimals.ReadOnly = true;
+        dgvAnimals.RowHeadersWidth = 51;
+        dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvAnimals.Size = new Size(690, 435);
+        dgvAnimals.TabIndex = 0;
+        dgvAnimals.CellContentClick += dgvAnimals_CellContentClick;
+        // 
+        // colID
+        // 
+        colID.DataPropertyName = "ID";
+        colID.HeaderText = "AnimalID";
+        colID.MinimumWidth = 6;
+        colID.Name = "colID";
+        colID.ReadOnly = true;
+        colID.Width = 125;
+        // 
+        // colName
+        // 
+        colName.DataPropertyName = "Name";
+        colName.HeaderText = "Name";
+        colName.MinimumWidth = 6;
+        colName.Name = "colName";
+        colName.ReadOnly = true;
+        colName.Width = 125;
+        // 
+        // colSpecies
+        // 
+        colSpecies.DataPropertyName = "Species";
+        colSpecies.HeaderText = "Species";
+        colSpecies.MinimumWidth = 6;
+        colSpecies.Name = "colSpecies";
+        colSpecies.ReadOnly = true;
+        colSpecies.Width = 125;
+        // 
+        // colAge
+        // 
+        colAge.DataPropertyName = "Age";
+        colAge.HeaderText = "Age";
+        colAge.MinimumWidth = 6;
+        colAge.Name = "colAge";
+        colAge.ReadOnly = true;
+        colAge.Width = 125;
+        // 
+        // colScore
+        // 
+        colScore.DataPropertyName = "Score";
+        colScore.HeaderText = "Recovery Score";
+        colScore.MinimumWidth = 6;
+        colScore.Name = "colScore";
+        colScore.ReadOnly = true;
+        colScore.Width = 125;
+        // 
+        // colStatus
+        // 
+        colStatus.DataPropertyName = "Status";
+        colStatus.HeaderText = "Status";
+        colStatus.MinimumWidth = 6;
+        colStatus.Name = "colStatus";
+        colStatus.ReadOnly = true;
+        colStatus.Width = 125;
+        // 
+        // colHousing
+        // 
+        colHousing.DataPropertyName = "Housing Unit";
+        colHousing.HeaderText = "Housing Unit";
+        colHousing.MinimumWidth = 6;
+        colHousing.Name = "colHousing";
+        colHousing.ReadOnly = true;
+        colHousing.Width = 125;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
+        Controls.Add(dgvAnimals);
+        Name = "Form1";
         Text = "Form1";
+        Load += Form1_Load;
+        ((System.ComponentModel.ISupportInitialize)dgvAnimals).EndInit();
+        ResumeLayout(false);
     }
 
     #endregion
+
+    private DataGridView dgvAnimals;
+    private DataGridViewTextBoxColumn colID;
+    private DataGridViewTextBoxColumn colName;
+    private DataGridViewTextBoxColumn colSpecies;
+    private DataGridViewTextBoxColumn colAge;
+    private DataGridViewTextBoxColumn colScore;
+    private DataGridViewTextBoxColumn colStatus;
+    private DataGridViewTextBoxColumn colHousing;
 }
