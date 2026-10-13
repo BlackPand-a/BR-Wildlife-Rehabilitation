@@ -1,0 +1,8 @@
+﻿WR-0001|Name1|Species1|1|85|Release-Ready|Pre-Release Camp
+WR-0002|Name2|Species2|2|80|Release-Ready|Pre-Release Camp
+WR-0003|Name3|Species3|3|70|Recovering|Outdoor Enclosure
+WR-0004|Name4|Species4|4|54|Stable|Recovery Ward
+WR-0005|Name5|Species5|5|13|Critical|Intensive Care Unit
+WR-0006|Name6|Species6|7|4|Critical|Intensive Care Unit
+WR-0007|Name7|Species7|8|43|Stable|Recovery Ward
+WR-0008|Name8|Species8|9|21|Serious|High-Dependency Ward
