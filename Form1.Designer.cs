@@ -45,15 +45,15 @@ partial class Form1
         dgvAnimals.AllowUserToDeleteRows = false;
         dgvAnimals.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dgvAnimals.Columns.AddRange(new DataGridViewColumn[] { colID, colName, colSpecies, colAge, colScore, colStatus, colHousing });
-        dgvAnimals.Location = new Point(75, 3);
+        dgvAnimals.Location = new Point(66, 2);
+        dgvAnimals.Margin = new Padding(3, 2, 3, 2);
         dgvAnimals.MultiSelect = false;
         dgvAnimals.Name = "dgvAnimals";
         dgvAnimals.ReadOnly = true;
         dgvAnimals.RowHeadersWidth = 51;
         dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dgvAnimals.Size = new Size(690, 435);
+        dgvAnimals.Size = new Size(604, 326);
         dgvAnimals.TabIndex = 0;
-        dgvAnimals.CellContentClick += dgvAnimals_CellContentClick;
         // 
         // colID
         // 
@@ -120,10 +120,11 @@ partial class Form1
         // 
         // Form1
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(944, 610);
         Controls.Add(dgvAnimals);
+        Margin = new Padding(3, 2, 3, 2);
         Name = "Form1";
         Text = "Form1";
         Load += Form1_Load;
