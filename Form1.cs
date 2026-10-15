@@ -91,5 +91,11 @@ public partial class Form1 : Form
         }
 
         RefreshGrid();
+
+        txtAnimalID.Clear();
+        txtName.Clear();
+        txtSpecies.Clear();
+        txtAge.Clear();
+        txtRecoveryScore.Clear();
     }
 }
