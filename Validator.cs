@@ -77,7 +77,7 @@ namespace BRWildlife
             species = species.Trim();
             if (species.Length > 30 || species.Contains('|'))
             {
-                errorMessage = "Name must be between 1 and 30 characters and must not contain the pipe(|) character";
+                errorMessage = "Species must be between 1 and 30 characters and must not contain the pipe(|) character";
                 return false;
             }
 

@@ -2,6 +2,8 @@
 
 partial class Form1
 {
+    private System.Windows.Forms.Label lblAnimalID;
+    private System.Windows.Forms.TextBox txtAnimalID;
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -36,16 +38,17 @@ partial class Form1
         colScore = new DataGridViewTextBoxColumn();
         colStatus = new DataGridViewTextBoxColumn();
         colHousing = new DataGridViewTextBoxColumn();
-        this.lblAnimalID = new Label();
         lblName = new Label();
         lblSpecies = new Label();
         lblRecoveryScore = new Label();
         lbllAge = new Label();
-        this.txtAnimalID = new TextBox();
-        this.txtName = new TextBox();
-        this.txtSpecies = new TextBox();
         txtRecoveryScore = new TextBox();
-        textBox5 = new TextBox();
+        txtAge = new TextBox();
+        lblAnimalID = new Label();
+        txtAnimalID = new TextBox();
+        txtName = new TextBox();
+        txtSpecies = new TextBox();
+        btnAdd = new Button();
         ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
         SuspendLayout();
         // 
@@ -128,19 +131,10 @@ partial class Form1
         colHousing.ReadOnly = true;
         colHousing.Width = 125;
         // 
-        // lblAnimalID
-        // 
-        this.lblAnimalID.AutoSize = true;
-        this.lblAnimalID.Location = new Point(85, 419);
-        this.lblAnimalID.Name = "lblAnimalID";
-        this.lblAnimalID.Size = new Size(59, 15);
-        this.lblAnimalID.TabIndex = 1;
-        this.lblAnimalID.Text = "Animal ID";
-        // 
         // lblName
         // 
         lblName.AutoSize = true;
-        lblName.Location = new Point(85, 470);
+        lblName.Location = new Point(85, 475);
         lblName.Name = "lblName";
         lblName.Size = new Size(39, 15);
         lblName.TabIndex = 2;
@@ -149,7 +143,7 @@ partial class Form1
         // lblSpecies
         // 
         lblSpecies.AutoSize = true;
-        lblSpecies.Location = new Point(85, 526);
+        lblSpecies.Location = new Point(86, 530);
         lblSpecies.Name = "lblSpecies";
         lblSpecies.Size = new Size(46, 15);
         lblSpecies.TabIndex = 3;
@@ -173,27 +167,6 @@ partial class Form1
         lbllAge.TabIndex = 5;
         lbllAge.Text = "Age";
         // 
-        // txtAnimalID
-        // 
-        this.txtAnimalID.Location = new Point(193, 419);
-        this.txtAnimalID.Name = "txtAnimalID";
-        this.txtAnimalID.Size = new Size(100, 23);
-        this.txtAnimalID.TabIndex = 6;
-        // 
-        // txtName
-        // 
-        this.txtName.Location = new Point(193, 470);
-        this.txtName.Name = "txtName";
-        this.txtName.Size = new Size(100, 23);
-        this.txtName.TabIndex = 7;
-        // 
-        // txtSpecies
-        // 
-        this.txtSpecies.Location = new Point(193, 526);
-        this.txtSpecies.Name = "txtSpecies";
-        this.txtSpecies.Size = new Size(100, 23);
-        this.txtSpecies.TabIndex = 8;
-        // 
         // txtRecoveryScore
         // 
         txtRecoveryScore.Location = new Point(532, 419);
@@ -201,28 +174,69 @@ partial class Form1
         txtRecoveryScore.Size = new Size(100, 23);
         txtRecoveryScore.TabIndex = 9;
         // 
-        // textBox5
+        // txtAge
         // 
-        textBox5.Location = new Point(532, 475);
-        textBox5.Name = "textBox5";
-        textBox5.Size = new Size(100, 23);
-        textBox5.TabIndex = 10;
+        txtAge.Location = new Point(532, 475);
+        txtAge.Name = "txtAge";
+        txtAge.Size = new Size(100, 23);
+        txtAge.TabIndex = 10;
+        // 
+        // lblAnimalID
+        // 
+        lblAnimalID.AutoSize = true;
+        lblAnimalID.Location = new Point(86, 419);
+        lblAnimalID.Name = "lblAnimalID";
+        lblAnimalID.Size = new Size(56, 15);
+        lblAnimalID.TabIndex = 11;
+        lblAnimalID.Text = "AnimalID";
+        // 
+        // txtAnimalID
+        // 
+        txtAnimalID.Location = new Point(168, 416);
+        txtAnimalID.Name = "txtAnimalID";
+        txtAnimalID.Size = new Size(100, 23);
+        txtAnimalID.TabIndex = 12;
+        // 
+        // txtName
+        // 
+        txtName.Location = new Point(168, 467);
+        txtName.Name = "txtName";
+        txtName.Size = new Size(100, 23);
+        txtName.TabIndex = 13;
+        // 
+        // txtSpecies
+        // 
+        txtSpecies.Location = new Point(168, 522);
+        txtSpecies.Name = "txtSpecies";
+        txtSpecies.Size = new Size(100, 23);
+        txtSpecies.TabIndex = 14;
+        // 
+        // btnAdd
+        // 
+        btnAdd.Location = new Point(85, 610);
+        btnAdd.Name = "btnAdd";
+        btnAdd.Size = new Size(75, 23);
+        btnAdd.TabIndex = 15;
+        btnAdd.Text = "Add";
+        btnAdd.UseVisualStyleBackColor = true;
+        btnAdd.Click += btnAdd_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1113, 757);
-        Controls.Add(textBox5);
+        Controls.Add(btnAdd);
+        Controls.Add(txtSpecies);
+        Controls.Add(txtName);
+        Controls.Add(txtAnimalID);
+        Controls.Add(lblAnimalID);
+        Controls.Add(txtAge);
         Controls.Add(txtRecoveryScore);
-        Controls.Add(this.txtSpecies);
-        Controls.Add(this.txtName);
-        Controls.Add(this.txtAnimalID);
         Controls.Add(lbllAge);
         Controls.Add(lblRecoveryScore);
         Controls.Add(lblSpecies);
         Controls.Add(lblName);
-        Controls.Add(this.lblAnimalID);
         Controls.Add(dgvAnimals);
         Margin = new Padding(3, 2, 3, 2);
         Name = "Form1";
@@ -249,8 +263,9 @@ partial class Form1
     private Label lblRecoveryScore;
     private Label lbllAge;
     private TextBox textBox1;
-    private TextBox textBox2;
-    private TextBox textBox3;
+    private TextBox txtName;
+    private TextBox txtSpecies;
     private TextBox txtRecoveryScore;
-    private TextBox textBox5;
+    private TextBox txtAge;
+    private Button btnAdd;
 }
