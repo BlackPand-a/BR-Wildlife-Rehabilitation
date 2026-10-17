@@ -2,6 +2,7 @@ namespace BRWildlife;
 
 public partial class Form1 : Form
 {
+    private string? editingAnimalID = null;
     public Form1()
     {
         InitializeComponent();
@@ -75,7 +76,7 @@ public partial class Form1 : Form
         try
         {
             //Append one line to animals.txt
-            File.AppendAllLines("animals.txt", new[] {newLine}, System.Text.Encoding.UTF8);
+            File.AppendAllLines("animals.txt", new[] { newLine }, System.Text.Encoding.UTF8);
 
             //Confirmation message displaying calculated status and housing unit 
             MessageBox.Show(
@@ -84,7 +85,7 @@ public partial class Form1 : Form
                 $"Succes",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show($"Error saving record: {ex.Message}", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -97,5 +98,60 @@ public partial class Form1 : Form
         txtSpecies.Clear();
         txtAge.Clear();
         txtRecoveryScore.Clear();
+    }
+
+    // Loads an animal into the textboxes and enables edit mode.
+    private void EnterEditMode(Animal animal)
+    {
+        editingAnimalID = animal.ID;
+
+        txtAnimalID.Text = animal.ID;
+        txtName.Text = animal.Name;
+        txtSpecies.Text = animal.Species;
+        txtAge.Text = animal.Age.ToString();
+        txtRecoveryScore.Text = animal.Score.ToString();
+
+        txtAnimalID.ReadOnly = true;
+
+        btnAdd.Enabled = false;
+        btnSaveChanges.Enabled = true;
+    }
+
+    // Clears the input fields and returns the form to add mode.
+    private void ResetForm()
+    {
+        editingAnimalID = null;
+
+        txtAnimalID.Clear();
+        txtName.Clear();
+        txtSpecies.Clear();
+        txtAge.Clear();
+        txtRecoveryScore.Clear();
+
+        txtAnimalID.ReadOnly = false;
+
+        btnAdd.Enabled = true;
+        btnSaveChanges.Enabled = false;
+    }
+
+    // Loads the selected grid row into edit mode.
+    private void dgvAnimals_CellClick(object sender, DataGridViewCellEventArgs e)
+    {
+        // A negative row index means the user clicked a column header.
+        if (e.RowIndex < 0)
+            return;
+
+        // Get the Animal object represented by the clicked row.
+        Animal? animal = dgvAnimals.Rows[e.RowIndex].DataBoundItem as Animal;
+
+        if (animal == null)
+            return;
+
+        EnterEditMode(animal);
+    }
+
+    private void btnClear_Click(object sender, EventArgs e)
+    {
+        ResetForm();
     }
 }

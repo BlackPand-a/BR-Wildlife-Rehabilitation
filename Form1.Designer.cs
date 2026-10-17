@@ -49,7 +49,13 @@ partial class Form1
         txtName = new TextBox();
         txtSpecies = new TextBox();
         btnAdd = new Button();
+        txtSearchID = new TextBox();
+        btnSearch = new Button();
+        btnSaveChanges = new Button();
+        btnClear = new Button();
+        panel1 = new Panel();
         ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
+        panel1.SuspendLayout();
         SuspendLayout();
         // 
         // dgvAnimals
@@ -67,6 +73,7 @@ partial class Form1
         dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dgvAnimals.Size = new Size(913, 364);
         dgvAnimals.TabIndex = 0;
+        dgvAnimals.CellClick += dgvAnimals_CellClick;
         // 
         // colID
         // 
@@ -221,11 +228,60 @@ partial class Form1
         btnAdd.UseVisualStyleBackColor = true;
         btnAdd.Click += btnAdd_Click;
         // 
+        // txtSearchID
+        // 
+        txtSearchID.Location = new Point(3, 3);
+        txtSearchID.Name = "txtSearchID";
+        txtSearchID.Size = new Size(100, 23);
+        txtSearchID.TabIndex = 0;
+        // 
+        // btnSearch
+        // 
+        btnSearch.Location = new Point(3, 32);
+        btnSearch.Name = "btnSearch";
+        btnSearch.Size = new Size(75, 23);
+        btnSearch.TabIndex = 1;
+        btnSearch.Text = "Search";
+        btnSearch.UseVisualStyleBackColor = true;
+        // 
+        // btnSaveChanges
+        // 
+        btnSaveChanges.Enabled = false;
+        btnSaveChanges.Location = new Point(3, 61);
+        btnSaveChanges.Name = "btnSaveChanges";
+        btnSaveChanges.Size = new Size(112, 23);
+        btnSaveChanges.TabIndex = 2;
+        btnSaveChanges.Text = "Save Changes";
+        btnSaveChanges.UseVisualStyleBackColor = true;
+        // 
+        // btnClear
+        // 
+        btnClear.Location = new Point(3, 90);
+        btnClear.Name = "btnClear";
+        btnClear.Size = new Size(75, 23);
+        btnClear.TabIndex = 3;
+        btnClear.Text = "Clear";
+        btnClear.UseVisualStyleBackColor = true;
+        btnClear.Click += btnClear_Click;
+        // 
+        // panel1
+        // 
+        panel1.BackColor = SystemColors.ButtonFace;
+        panel1.Controls.Add(btnClear);
+        panel1.Controls.Add(btnSaveChanges);
+        panel1.Controls.Add(btnSearch);
+        panel1.Controls.Add(txtSearchID);
+        panel1.Location = new Point(697, 419);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(301, 169);
+        panel1.TabIndex = 16;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1113, 757);
+        Controls.Add(panel1);
         Controls.Add(btnAdd);
         Controls.Add(txtSpecies);
         Controls.Add(txtName);
@@ -243,6 +299,8 @@ partial class Form1
         Text = "Form1";
         Load += Form1_Load;
         ((System.ComponentModel.ISupportInitialize)dgvAnimals).EndInit();
+        panel1.ResumeLayout(false);
+        panel1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -268,4 +326,9 @@ partial class Form1
     private TextBox txtRecoveryScore;
     private TextBox txtAge;
     private Button btnAdd;
+    private TextBox txtSearchID;
+    private Button btnSearch;
+    private Button btnSaveChanges;
+    private Button btnClear;
+    private Panel panel1;
 }
