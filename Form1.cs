@@ -154,4 +154,90 @@ public partial class Form1 : Form
     {
         ResetForm();
     }
+
+    private void btnSaveChanges_Click(object sender, EventArgs e)
+    {
+        // Make sure an animal is currently being edited.
+        if (editingAnimalID == null)
+        {
+            MessageBox.Show("Please select an animal to update.");
+            return;
+        }
+
+        // Load the latest animal records.
+        var result = AnimalFileHandler.Load();
+        List<Animal> animals = result.Animals;
+
+        // Find the original animal using its stored ID.
+        Animal? animal = animals.FirstOrDefault(a =>
+            a.ID.Equals(editingAnimalID, StringComparison.OrdinalIgnoreCase));
+
+        if (animal == null)
+        {
+            MessageBox.Show("Animal not found. It may have been removed.");
+            return;
+        }
+
+        // Validate the edited fields without checking ID uniqueness.
+        if (!Validator.ValidateAnimal(
+            animal.ID,
+            txtName.Text,
+            txtSpecies.Text,
+            txtAge.Text,
+            txtRecoveryScore.Text,
+            false,
+            animals,
+            out string errorMessage))
+        {
+            MessageBox.Show(errorMessage, "Validation Error");
+            return;
+        }
+
+        // Update the animal's editable properties.
+        animal.Name = txtName.Text.Trim();
+        animal.Species = txtSpecies.Text.Trim();
+        animal.Age = int.Parse(txtAge.Text.Trim());
+        animal.Score = int.Parse(txtRecoveryScore.Text.Trim());
+
+        // Recalculate the classification using the new score.
+        var classification = Classifier.Classify(animal.Score);
+
+        animal.Status = classification.Status;
+        animal.HousingUnit = classification.HousingUnit;
+
+        // Rewrite the file with the updated animal.
+        if (!AnimalFileHandler.SaveAll(animals))
+        {
+            return;
+        }
+
+        RefreshGrid();
+        ResetForm();
+
+        MessageBox.Show("Animal updated successfully!");
+    }
+
+    private void btnSearch_Click(object sender, EventArgs e)
+    {
+        string searchID = txtSearchID.Text.Trim();
+
+        if (string.IsNullOrWhiteSpace(searchID))
+        {
+            MessageBox.Show("Please enter an Animal ID.");
+            return;
+        }
+
+        var result = AnimalFileHandler.Load();
+
+        Animal? animal = result.Animals.FirstOrDefault(a =>
+            a.ID.Equals(searchID, StringComparison.OrdinalIgnoreCase));
+
+        if (animal == null)
+        {
+            MessageBox.Show("Animal not found.");
+            return;
+        }
+
+        EnterEditMode(animal);
+    }
 }

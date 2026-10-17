@@ -54,6 +54,7 @@ partial class Form1
         btnSaveChanges = new Button();
         btnClear = new Button();
         panel1 = new Panel();
+        lblSearch = new Label();
         ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
         panel1.SuspendLayout();
         SuspendLayout();
@@ -230,35 +231,37 @@ partial class Form1
         // 
         // txtSearchID
         // 
-        txtSearchID.Location = new Point(3, 3);
+        txtSearchID.Location = new Point(3, 44);
         txtSearchID.Name = "txtSearchID";
-        txtSearchID.Size = new Size(100, 23);
+        txtSearchID.Size = new Size(295, 23);
         txtSearchID.TabIndex = 0;
         // 
         // btnSearch
         // 
-        btnSearch.Location = new Point(3, 32);
+        btnSearch.Location = new Point(3, 73);
         btnSearch.Name = "btnSearch";
-        btnSearch.Size = new Size(75, 23);
+        btnSearch.Size = new Size(156, 23);
         btnSearch.TabIndex = 1;
         btnSearch.Text = "Search";
         btnSearch.UseVisualStyleBackColor = true;
+        btnSearch.Click += btnSearch_Click;
         // 
         // btnSaveChanges
         // 
         btnSaveChanges.Enabled = false;
-        btnSaveChanges.Location = new Point(3, 61);
+        btnSaveChanges.Location = new Point(3, 102);
         btnSaveChanges.Name = "btnSaveChanges";
-        btnSaveChanges.Size = new Size(112, 23);
+        btnSaveChanges.Size = new Size(295, 23);
         btnSaveChanges.TabIndex = 2;
         btnSaveChanges.Text = "Save Changes";
         btnSaveChanges.UseVisualStyleBackColor = true;
+        btnSaveChanges.Click += btnSaveChanges_Click;
         // 
         // btnClear
         // 
-        btnClear.Location = new Point(3, 90);
+        btnClear.Location = new Point(165, 73);
         btnClear.Name = "btnClear";
-        btnClear.Size = new Size(75, 23);
+        btnClear.Size = new Size(133, 23);
         btnClear.TabIndex = 3;
         btnClear.Text = "Clear";
         btnClear.UseVisualStyleBackColor = true;
@@ -267,14 +270,24 @@ partial class Form1
         // panel1
         // 
         panel1.BackColor = SystemColors.ButtonFace;
+        panel1.Controls.Add(lblSearch);
         panel1.Controls.Add(btnClear);
         panel1.Controls.Add(btnSaveChanges);
         panel1.Controls.Add(btnSearch);
         panel1.Controls.Add(txtSearchID);
         panel1.Location = new Point(697, 419);
         panel1.Name = "panel1";
-        panel1.Size = new Size(301, 169);
+        panel1.Size = new Size(301, 136);
         panel1.TabIndex = 16;
+        // 
+        // lblSearch
+        // 
+        lblSearch.AutoSize = true;
+        lblSearch.Location = new Point(3, 17);
+        lblSearch.Name = "lblSearch";
+        lblSearch.Size = new Size(85, 15);
+        lblSearch.TabIndex = 4;
+        lblSearch.Text = "Search with ID:";
         // 
         // Form1
         // 
@@ -331,4 +344,5 @@ partial class Form1
     private Button btnSaveChanges;
     private Button btnClear;
     private Panel panel1;
+    private Label lblSearch;
 }
