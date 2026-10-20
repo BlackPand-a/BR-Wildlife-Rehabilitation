@@ -180,5 +180,9 @@ public partial class Form1 : Form
     private void Form1_Shown(object sender, EventArgs e)
     {
         dgvAnimals.ClearSelection();
+  
+
+    private void dgvAnimals_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
     }
 }
