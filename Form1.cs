@@ -11,7 +11,6 @@ public partial class Form1 : Form
 
     private int RefreshGrid()
     {
-<<<<<<< HEAD
         // Stop file loading from running while the Visual Studio designer is open
         if (DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
         {
@@ -19,8 +18,6 @@ public partial class Form1 : Form
         }
 
         //RefreshGrid loads the animals, rebinds the grid and returns the skipped count 
-=======
->>>>>>> origin/main
         var results = AnimalFileHandler.Load();
         dgvAnimals.DataSource = null;
         dgvAnimals.DataSource = results.Animals;
@@ -38,7 +35,6 @@ public partial class Form1 : Form
         }
     }
 
-<<<<<<< HEAD
     private void btnAdd_Click(object sender, EventArgs e)
     {
         //load existing records to check Animal ID uniqueness against the file
@@ -243,7 +239,6 @@ public partial class Form1 : Form
         }
 
         EnterEditMode(animal);
-=======
     private void btndelete_Click(object sender, EventArgs e)
     {
         if (dgvAnimals.SelectedRows.Count == 0)
@@ -405,6 +400,5 @@ public partial class Form1 : Form
 
     private void dgvAnimals_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
->>>>>>> origin/main
     }
 }
