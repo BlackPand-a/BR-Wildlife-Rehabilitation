@@ -182,6 +182,8 @@ public partial class Form1 : Form
         dgvAnimals.ClearSelection();
   
 
+    }
+
     private void dgvAnimals_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
     }
