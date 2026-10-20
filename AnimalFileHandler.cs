@@ -55,25 +55,20 @@ namespace BRWildlife
         }
 
         // Rewrites the whole file from the list.
-        public static bool SaveAll(List<Animal> animals)
+        public static void SaveAll(List<Animal> animals)
         {
             try
             {
-                var lines = animals.Select(a => a.ID + "|" + a.Name + "|" + a.Species + "|" + a.Age + "|" + a.Score + "|" + a.Status + "|" + a.HousingUnit);
-
+                var lines = animals.Select(a =>a.ID +"|"+ a.Name + "|" + a.Species+ "|" + a.Age +"|" + a.Score + "|" + a.Status + "|" + a.HousingUnit);
                 File.WriteAllLines(FilePath, lines);
-
-                return true; // File saved successfully
             }
             catch (IOException)
             {
                 MessageBox.Show("The file is in use by another program. Close it and try again.");
-                return false;
             }
             catch (UnauthorizedAccessException)
             {
                 MessageBox.Show("The file is read-only or you do not have permission to write to it.");
-                return false;
             }
         }
     }
