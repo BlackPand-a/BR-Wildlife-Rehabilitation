@@ -26,4 +26,8 @@ public partial class Form1 : Form
     }
 
   
+
+    private void dgvAnimals_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+    }
 }
