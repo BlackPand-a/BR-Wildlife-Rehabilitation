@@ -2,18 +2,28 @@ namespace BRWildlife;
 
 public partial class Form1 : Form
 {
+    private string? editingAnimalID = null;
     public Form1()
     {
         InitializeComponent();
     }
-    // RefreshGrid loads the animals, rebinds the grid and returns the skipped count 
+
+
     private int RefreshGrid()
     {
+        // Stop file loading from running while the Visual Studio designer is open
+        if (DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+        {
+            return 0;
+        }
+
+        //RefreshGrid loads the animals, rebinds the grid and returns the skipped count
         var results = AnimalFileHandler.Load();
         dgvAnimals.DataSource = null;
         dgvAnimals.DataSource = results.Animals;
         return results.Skipped;
     }
+
 
     // This just shows the amount of lines skipped during the startup.
     private void Form1_Load(object sender, EventArgs e)
@@ -25,6 +35,211 @@ public partial class Form1 : Form
         }
     }
 
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+        //load existing records to check Animal ID uniqueness against the file
+        var loadResult = AnimalFileHandler.Load();
+        List<Animal> existingAnimals = loadResult.Animals;
+
+
+        //Gather input from text boxes
+        string id = txtAnimalID.Text;
+        string name = txtName.Text;
+        string species = txtSpecies.Text;
+        string age = txtAge.Text;
+        string recoveryScore = txtRecoveryScore.Text;
+
+
+        //Validate using the Validator method
+        if (!Validator.ValidateAnimal(id, name, species, age, recoveryScore, true, existingAnimals, out string errorMessage))
+        {
+            MessageBox.Show(errorMessage, "Validation Error", MessageBoxButtons.OK);
+            return;
+        }
+
+
+        //Clean and parse valid inputs
+        string cleadID = id.Trim().ToUpper();
+        string cleanName = name.Trim();
+        string cleanSpecies = species.Trim();
+        int score = int.Parse(recoveryScore.Trim());
+
+
+        //Calculating Status and Housing Unit
+        var classification = Classifier.Classify(score);
+        string status = classification.Item1;
+        string housingUnit = classification.Item2;
+
+
+        //Format the user input to match pip character structure
+        string newLine = $"{cleadID} | {cleanName} | {cleanSpecies} | {age} | {score} | {status} | {housingUnit}";
+        try
+        {
+            //Append one line to animals.txt
+            File.AppendAllLines("animals.txt", new[] { newLine }, System.Text.Encoding.UTF8);
+
+            //Confirmation message displaying calculated status and housing unit
+            MessageBox.Show(
+                $"Animal Added Successfully!\nStatus: {status}",
+                $"\nHousing Unit: {housingUnit}" +
+                $"Succes",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error saving record: {ex.Message}", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        RefreshGrid();
+
+        txtAnimalID.Clear();
+        txtName.Clear();
+        txtSpecies.Clear();
+        txtAge.Clear();
+        txtRecoveryScore.Clear();
+    }
+
+    // Loads an animal into the textboxes and enables edit mode.
+    private void EnterEditMode(Animal animal)
+    {
+        editingAnimalID = animal.ID;
+
+        txtAnimalID.Text = animal.ID;
+        txtName.Text = animal.Name;
+        txtSpecies.Text = animal.Species;
+        txtAge.Text = animal.Age.ToString();
+        txtRecoveryScore.Text = animal.Score.ToString();
+
+        txtAnimalID.ReadOnly = true;
+
+        btnAdd.Enabled = false;
+        btnSaveChanges.Enabled = true;
+    }
+
+    // Clears the input fields and returns the form to add mode.
+    private void ResetForm()
+    {
+        editingAnimalID = null;
+
+        txtAnimalID.Clear();
+        txtName.Clear();
+        txtSpecies.Clear();
+        txtAge.Clear();
+        txtRecoveryScore.Clear();
+
+        txtAnimalID.ReadOnly = false;
+
+        btnAdd.Enabled = true;
+        btnSaveChanges.Enabled = false;
+    }
+
+    // Loads the selected grid row into edit mode.
+    private void dgvAnimals_CellClick(object sender, DataGridViewCellEventArgs e)
+    {
+        // A negative row index means the user clicked a column header.
+        if (e.RowIndex < 0)
+            return;
+
+        // Get the Animal object represented by the clicked row.
+        Animal? animal = dgvAnimals.Rows[e.RowIndex].DataBoundItem as Animal;
+
+        if (animal == null)
+            return;
+
+        EnterEditMode(animal);
+    }
+
+    private void btnClear_Click(object sender, EventArgs e)
+    {
+        ResetForm();
+    }
+
+    private void btnSaveChanges_Click(object sender, EventArgs e)
+    {
+        // Make sure an animal is currently being edited.
+        if (editingAnimalID == null)
+        {
+            MessageBox.Show("Please select an animal to update.");
+            return;
+        }
+
+        // Load the latest animal records.
+        var result = AnimalFileHandler.Load();
+        List<Animal> animals = result.Animals;
+
+        // Find the original animal using its stored ID.
+        Animal? animal = animals.FirstOrDefault(a =>
+            a.ID.Equals(editingAnimalID, StringComparison.OrdinalIgnoreCase));
+
+        if (animal == null)
+        {
+            MessageBox.Show("Animal not found. It may have been removed.");
+            return;
+        }
+
+        // Validate the edited fields without checking ID uniqueness.
+        if (!Validator.ValidateAnimal(
+            animal.ID,
+            txtName.Text,
+            txtSpecies.Text,
+            txtAge.Text,
+            txtRecoveryScore.Text,
+            false,
+            animals,
+            out string errorMessage))
+        {
+            MessageBox.Show(errorMessage, "Validation Error");
+            return;
+        }
+
+        // Update the animal's editable properties.
+        animal.Name = txtName.Text.Trim();
+        animal.Species = txtSpecies.Text.Trim();
+        animal.Age = int.Parse(txtAge.Text.Trim());
+        animal.Score = int.Parse(txtRecoveryScore.Text.Trim());
+
+        // Recalculate the classification using the new score.
+        var classification = Classifier.Classify(animal.Score);
+
+        animal.Status = classification.Status;
+        animal.HousingUnit = classification.HousingUnit;
+
+        // Rewrite the file with the updated animal.
+        if (!AnimalFileHandler.SaveAll(animals))
+        {
+            return;
+        }
+
+        RefreshGrid();
+        ResetForm();
+
+        MessageBox.Show("Animal updated successfully!");
+    }
+
+    private void btnSearch_Click(object sender, EventArgs e)
+    {
+        string searchID = txtSearchID.Text.Trim();
+
+        if (string.IsNullOrWhiteSpace(searchID))
+        {
+            MessageBox.Show("Please enter an Animal ID.");
+            return;
+        }
+
+        var result = AnimalFileHandler.Load();
+
+        Animal? animal = result.Animals.FirstOrDefault(a =>
+            a.ID.Equals(searchID, StringComparison.OrdinalIgnoreCase));
+
+        if (animal == null)
+        {
+            MessageBox.Show("Animal not found.");
+            return;
+        }
+
+        EnterEditMode(animal);
+    }
     private void btndelete_Click(object sender, EventArgs e)
     {
         if (dgvAnimals.SelectedRows.Count == 0)
@@ -176,15 +391,13 @@ public partial class Form1 : Form
         }
     }
 
-   
+
     private void Form1_Shown(object sender, EventArgs e)
     {
         dgvAnimals.ClearSelection();
-  
+
 
     }
 
-    private void dgvAnimals_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-    }
+
 }
